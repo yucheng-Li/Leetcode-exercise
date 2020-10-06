@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+　　<head>
+　　　　<meta charset="UTF-8">
+　　　　<meta name="viewport" content="width=device-width, initial-scale=1.0">
+　　　　<meta http-equiv="X-UA-Compatible" content="ie=edge">
+　　　　<title></title>
+　　　　<script src="F:\VB_2019\work\vue\work\vue.js"></script>
+　　　　<script src="F:\VB_2019\work\vue\work\velocity.js"></script>
+　　</head>
+<style>
+    .ball{
+        width: 10px;
+        height: 10px;
+        background-color: aqua;
+
+        left: 50px;
+        top: 50px;
+    }
+</style>
+<body>
+<div id='app'>
+　　<button @click='handleClick'>切换</button>
+
+　　<transition
+　　　　@before-enter='handleBeforeEnter'
+　　　　@enter='handleEnter'
+　　　　@after-enter='handleAfterEnter'
+　　>
+　　　　<div v-show='show' class="ball" v-bind:css="false"></div>
+　　</transition>
+</div>
+
+<script>
+var vm = new Vue({
+　　el:'#app',
+　　data:{
+　　　　show:false
+　　},
+　　methods:{
+　　　　handleClick:function(){
+　　　　　　this.show = !this.show;
+　　　　},
+　　　　handleBeforeEnter:function(el){
+　　　　　　el.style.transform = "translate(0,0)"
+　　　　},
+　　　　handleEnter:function(el,done){
+　　　　　　Velocity(el,{
+　　　　　　　　opacity:1,
+                translateX:'100px'
+　　　　　　},{
+　　　　　　　　duration:1000,
+　　　　　　　　complete:done
+　　　　　　})
+
+            // el.offsetWidth
+            // el.style.transform = "translate(150px , 450px)"
+            // el.style.transition = 'all 5s ease'
+            done()
+　　　　},
+　　　　handleAfterEnter:function(el){
+    // 　　　　this.show = !this.show;
+
+　　　　}
+　　}
+})
+</script>
+</body>
+</html>
